@@ -42,11 +42,13 @@ router.get('/logout', async (req, res, next) => {
   if (req.session.user) {
     req.session.destroy(err => {
       if (err) {
-        res.json({ message: 'no session' })
+        next(err)
       } else {
-        res.json({ message: 'logged out' })
+        res.json({ status: 200, message: 'logged out' })
       }
     })
+  } else {
+    res.json({ status: 200, message: 'no session' })
   }
 })
 
