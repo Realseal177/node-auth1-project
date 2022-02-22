@@ -6,8 +6,12 @@
     "message": "You shall not pass!"
   }
 */
-function restricted() {
-
+function restricted(req, res, next) {
+  if (req.sessions.user) {
+    next()
+  } else {
+    next({ status: 401, message: 'You shall not pass!' })
+  }
 }
 
 /*
@@ -18,8 +22,8 @@ function restricted() {
     "message": "Username taken"
   }
 */
-function checkUsernameFree() {
-
+function checkUsernameFree(req, res, next) {
+  
 }
 
 /*
@@ -47,3 +51,10 @@ function checkPasswordLength() {
 }
 
 // Don't forget to add these to the `exports` object so they can be required in other modules
+
+module.exports = {
+  restricted,
+  checkUsernameExists,
+  checkPasswordLength,
+  checkUsernameFree
+}
